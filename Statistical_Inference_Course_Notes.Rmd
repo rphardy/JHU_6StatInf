@@ -5,7 +5,7 @@ $\pagebreak$
 * Goal = extend beyond data to population
 * Statistical Inference = only formal system of inference we have
 * many different modes, but **two** broad flavors of inference (inferential paradigms): ***Bayesian*** vs ***Frequencist***
-    * **Frequencist** = uses long run proportion of times an event occurs independent identically distributed repetitions
+    * **Frequentist** = uses long run proportion of times an event occurs independent identically distributed repetitions
 		* frequentist is what this class is focused on
 		* believes if an experiment is repeated many many times, the resultant percentage of success/something happening defines that population parameter
 	* **Bayesian** = probability estimate for a hypothesis is updated as additional evidence is acquired
