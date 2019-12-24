@@ -1,0 +1,387 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Statistical Inference - Course Project pt 1},
+            pdfauthor={Richard Hardy},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+% grffile has become a legacy package: https://ctan.org/pkg/grffile
+\IfFileExists{grffile.sty}{%
+\usepackage{grffile}
+}{}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Statistical Inference - Course Project pt 1}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{\href{https://github.com/rphardy}{Richard Hardy}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-12-15}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{part-1---simulation-exercise}{%
+\subsection{Part 1 - Simulation
+Exercise}\label{part-1---simulation-exercise}}
+
+\hypertarget{overview}{%
+\subsection{Overview}\label{overview}}
+
+This exercise is based on the exponential distribution, demonstrating an
+application of the Central Limit Theorem. The mean and variance of 1,000
+means of 40 random draws from the exponential distribution, is shown to
+approximate the theoretical population mean and variance given by the
+exponential distribution pdf.
+
+With \(X \sim Exp(\lambda)\):
+
+\begin{itemize}
+\item
+  \(E[X] = 1/\lambda\)
+\item
+  \(Var[X] = 1/\lambda^2\).
+\end{itemize}
+
+\hypertarget{simulations}{%
+\subsection{Simulations}\label{simulations}}
+
+Let: \(x_i\) be the \(ith\) draw of an iid random variable \(X\) where:
+
+\(X \sim Exp(\lambda)\)
+
+\hypertarget{simulating-1000-random-draws-from-the-exponential-function}{%
+\subsubsection{Simulating 1,000 random draws from the exponential
+function:}\label{simulating-1000-random-draws-from-the-exponential-function}}
+
+With \(\lambda = 0.2\), and \(n_x = 1,000\) a histogram, mean and
+variance is given by the following code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{56789}\NormalTok{)}
+\NormalTok{x <-}\StringTok{ }\KeywordTok{rexp}\NormalTok{(}\DecValTok{1000}\NormalTok{,}\FloatTok{0.2}\NormalTok{)}
+
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{qplot}\NormalTok{(x, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PeerAssessment_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xmn <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(x)}
+\NormalTok{xvar <-}\StringTok{ }\KeywordTok{var}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+This represents 1,000 randomly generated values, drawn with the
+probability density function (pdf) given by:
+
+\(f_x (x) = 1/\lambda \times e ^{-x/\lambda}, \space \space x>0, \space \lambda >0\)
+
+This set of 1,000 random draws has mean 5.14 and variance 26.98.
+
+\hypertarget{simulating-1000-means-and-variances-of-random-draws-of-size-40}{%
+\subsubsection{Simulating 1,000 means and variances of random draws of
+size
+40}\label{simulating-1000-means-and-variances-of-random-draws-of-size-40}}
+
+1,000 Means and variances of 40 exponentials with \(\lambda = 0.2\), is
+given by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{56789}\NormalTok{)}
+
+\NormalTok{mns =}\StringTok{ }\OtherTok{NULL}
+\NormalTok{vars =}\StringTok{ }\OtherTok{NULL}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1} \OperatorTok{:}\StringTok{ }\DecValTok{1000}\NormalTok{) \{}
+\NormalTok{        mns =}\StringTok{ }\KeywordTok{c}\NormalTok{(mns, }\KeywordTok{mean}\NormalTok{(}\KeywordTok{rexp}\NormalTok{(}\DecValTok{40}\NormalTok{,}\FloatTok{0.2}\NormalTok{)))}
+\NormalTok{        vars =}\StringTok{ }\KeywordTok{c}\NormalTok{(vars, }\KeywordTok{var}\NormalTok{(}\KeywordTok{rexp}\NormalTok{(}\DecValTok{40}\NormalTok{,}\FloatTok{0.2}\NormalTok{)))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The expected values are saved as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{expmn <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(mns)}
+\NormalTok{expvar <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(vars)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{sample-mean-versus-theoretical-mean}{%
+\subsection{Sample Mean versus Theoretical
+Mean}\label{sample-mean-versus-theoretical-mean}}
+
+The theoretical mean of means of 1,000 simulations (a large number) of
+40 exponentials is an approximation of the sample mean of an iid random
+variable \(X \sim Exp(\lambda)\), representing a large collection of iid
+random exponentials. This is consistent with the Law of Large Numbers
+and the Central Limit Theorem.
+
+This is given by \(1/\lambda\).
+
+With \(\lambda=0.2\) the theoretical mean is given as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{/}\StringTok{ }\FloatTok{0.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+From the sample of 1,000 simulations of 40 draws, the observed mean is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{expmn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.985121
+\end{verbatim}
+
+From the single sample of 1,000 draws from the pdf, the observed mean
+is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xmn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.137991
+\end{verbatim}
+
+The expected sample mean of 1,000 simulations of 40 draws: 4.99 is shown
+to be a close approximation of the theoretical mean 5.
+
+1,000 draws from the exponential pdf gives 5.14.
+
+\hypertarget{sample-variance-versus-theoretical-variance}{%
+\subsection{Sample Variance versus Theoretical
+Variance}\label{sample-variance-versus-theoretical-variance}}
+
+Similarly, the expected variance of 1,000 simulations (a large number)
+of 40 exponentials is an approximation of the sample variance of an iid
+random variable \(X \sim Exp(\lambda)\), representing a large collection
+of iid random exponentials. This is consistent with the Law of Large
+Numbers and the Central Limit Theorem.
+
+The expected variance of 1,000 simulations of 40 exponentials is given
+by \(1/\lambda^2\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{/}\StringTok{ }\NormalTok{(}\FloatTok{0.2}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+From the sample of 1,000 simulations of 40 exponentials, the variance of
+the mean is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{expvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24.87157
+\end{verbatim}
+
+From the sample of 1,000 draws from the pdf, the variance of \(X\) is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvar}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 26.979
+\end{verbatim}
+
+The expected sample variance of 1,000 simulations of 40 draws 24.87 is
+shown to be a close approximation of the theoretical variance 25.
+
+1,000 draws from the exponential pdf has variance 26.98.
+
+\hypertarget{distributions}{%
+\subsection{Distributions}\label{distributions}}
+
+The distribution of 1,000 randomly drawn exponentials is again, given
+by:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(x, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.25}\NormalTok{)}
+\NormalTok{l  }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ xmn)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PeerAssessment_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+The 1,000 randomly drawn values are distributed according to the
+exponential pdf around a mean of 5.14.
+
+The distribution of the mean of 1,000 simulations of 40 randomly drawn
+exponentials is given as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{q <-}\StringTok{ }\KeywordTok{qplot}\NormalTok{(mns, }\DataTypeTok{geom =} \StringTok{"histogram"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.25}\NormalTok{) }
+\NormalTok{q }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ expmn) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ expmn }\OperatorTok{+}\StringTok{ }\KeywordTok{sd}\NormalTok{(mns), }\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ expmn }\OperatorTok{-}\StringTok{ }\KeywordTok{sd}\NormalTok{(mns), }\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ expmn }\OperatorTok{+}\DecValTok{2}\OperatorTok{*}\KeywordTok{sd}\NormalTok{(mns), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ expmn }\DecValTok{-2}\OperatorTok{*}\KeywordTok{sd}\NormalTok{(mns), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PeerAssessment_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+The means of 1,000 simulations of size 40 are approximately normally
+distributed around an expected value of 4.99. Blue and red lines drawn
+at 1 and 2 standard deviations above and below the expected value
+illustrate that approximately 68\% and 95\% of the 1,000 observations of
+means of 40 draws will lie, respectively, within 1 and 2 standard
+deviations of the mean of the 1,000 means of 40 draws.
+
+Taken together, these plots show the CLT in action. Strictly speaking,
+as the number of simulations approaches infinity, the expected value of
+the simulated means of 40 draws will approach the expected value of a
+large collection of draws from the underlying exponential probability
+density function: i.e, will approach \(1/\lambda\)
+
+Slight deviations from normality might be observed at this simulation
+sample size given the extreme right skew of the exponential
+distribution. This is evident in the slightly wider right tail in the
+plot of the means of the 40 draws.
+
+
+\end{document}
